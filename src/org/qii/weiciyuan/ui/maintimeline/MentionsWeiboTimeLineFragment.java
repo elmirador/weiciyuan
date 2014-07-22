@@ -17,6 +17,7 @@ import org.qii.weiciyuan.support.database.MentionWeiboTimeLineDBTask;
 import org.qii.weiciyuan.support.error.WeiboException;
 import org.qii.weiciyuan.support.lib.MyAsyncTask;
 import org.qii.weiciyuan.support.lib.TopTipBar;
+import org.qii.weiciyuan.support.settinghelper.SettingUtility;
 import org.qii.weiciyuan.support.utils.AppEventAction;
 import org.qii.weiciyuan.support.utils.BundleArgsConstants;
 import org.qii.weiciyuan.support.utils.GlobalContext;
@@ -201,7 +202,12 @@ public class MentionsWeiboTimeLineFragment
     @Override
     protected void newMsgLoaderSuccessCallback(MessageListBean newValue, Bundle loaderArgs) {
         if (getActivity() != null && newValue.getSize() > 0) {
-            addNewDataAndRememberPosition(newValue);
+            boolean scrollToTop = SettingUtility.isReadStyleEqualWeibo();
+            if (scrollToTop) {
+                addNewDataWithoutRememberPosition(newValue);
+            } else {
+                addNewDataAndRememberPosition(newValue);
+            }
         }
         unreadBean = null;
         NotificationManager notificationManager = (NotificationManager) getActivity()
@@ -210,6 +216,14 @@ public class MentionsWeiboTimeLineFragment
                 .getMentionsWeiboNotificationId(GlobalContext.getInstance().getAccountBean()));
 
 
+    }
+
+    private void addNewDataWithoutRememberPosition(MessageListBean newValue) {
+        newMsgTipBar.setValue(newValue, true);
+
+        getList().addNewData(newValue);
+        getAdapter().notifyDataSetChanged();
+        getListView().setSelectionAfterHeaderView();
     }
 
     private void addNewDataAndRememberPosition(final MessageListBean newValue) {
@@ -488,7 +502,12 @@ public class MentionsWeiboTimeLineFragment
             MessageBean last = data.getItem(data.getSize() - 1);
             boolean dup = getList().getItemList().contains(last);
             if (!dup) {
-                addNewDataAndRememberPosition(data);
+                boolean scrollToTop = SettingUtility.isReadStyleEqualWeibo();
+                if (scrollToTop) {
+                    addNewDataWithoutRememberPosition(data);
+                } else {
+                    addNewDataAndRememberPosition(data);
+                }
             }
         }
     }

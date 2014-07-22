@@ -335,7 +335,8 @@ public class SettingUtility {
     }
 
     public static boolean isBlackMagicEnabled() {
-        return SettingHelper.getSharedPreferences(getContext(), BLACK_MAGIC, false);
+        return true;
+        //return SettingHelper.getSharedPreferences(getContext(), BLACK_MAGIC, false);
     }
 
     public static void setBlackMagicEnabled() {
