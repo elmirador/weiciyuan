@@ -122,7 +122,7 @@ public class MentionsTimeLine extends AbstractAppFragment
         if (unreadTabIndex == null) {
             return;
         }
-            switch (unreadTabIndex) {
+        switch (unreadTabIndex) {
             case MENTION_WEIBO:
                 ((MainTimeLineActivity) getActivity()).getMenuFragment()
                         .switchCategory(LeftMenuFragment.MENTIONS_INDEX);

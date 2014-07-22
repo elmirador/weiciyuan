@@ -118,15 +118,7 @@ public class AboutFragment extends PreferenceFragment {
 
                         blackMagicCount++;
                         if (blackMagicCount > 3) {
-                            if (SettingUtility.isBlackMagicEnabled() == false) {
-                                SettingUtility.setBlackMagicEnabled();
-                                Toast.makeText(getActivity(), "BLACK MAGIC is ON",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                            else {
-                                Toast.makeText(getActivity(), "BLACK MAGIC is ALREADY ON",
-                                        Toast.LENGTH_SHORT).show();
-                            }
+                            SettingUtility.setBlackMagicEnabled();
                         }
 
                         if (mp != null && mp.isPlaying()) {

@@ -16,7 +16,6 @@ import org.qii.weiciyuan.support.database.CommentToMeTimeLineDBTask;
 import org.qii.weiciyuan.support.error.WeiboException;
 import org.qii.weiciyuan.support.lib.MyAsyncTask;
 import org.qii.weiciyuan.support.lib.TopTipBar;
-import org.qii.weiciyuan.support.settinghelper.SettingUtility;
 import org.qii.weiciyuan.support.utils.AppEventAction;
 import org.qii.weiciyuan.support.utils.BundleArgsConstants;
 import org.qii.weiciyuan.support.utils.GlobalContext;
@@ -378,26 +377,13 @@ public class CommentsToMeTimeLineFragment extends AbstractTimeLineFragment<Comme
     protected void newMsgLoaderSuccessCallback(CommentListBean newValue, Bundle loaderArgs) {
         if (newValue != null && newValue.getItemList() != null
                 && newValue.getItemList().size() > 0) {
-            boolean scrollToTop = SettingUtility.isReadStyleEqualWeibo();
-            if (scrollToTop) {
-                addNewDataWithoutRememberPosition(newValue);
-            } else {
-                addNewDataAndRememberPosition(newValue);
-            }
+            addNewDataAndRememberPosition(newValue);
         }
         unreadBean = null;
         NotificationManager notificationManager = (NotificationManager) getActivity()
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancel(NotificationServiceHelper
                 .getCommentsToMeNotificationId(GlobalContext.getInstance().getAccountBean()));
-    }
-
-    private void addNewDataWithoutRememberPosition(CommentListBean newValue) {
-        newMsgTipBar.setValue(newValue, true);
-
-        getList().addNewData(newValue);
-        getAdapter().notifyDataSetChanged();
-        getListView().setSelectionAfterHeaderView();
     }
 
     private void addNewDataAndRememberPosition(final CommentListBean newValue) {
@@ -564,12 +550,7 @@ public class CommentsToMeTimeLineFragment extends AbstractTimeLineFragment<Comme
             CommentBean last = data.getItem(data.getSize() - 1);
             boolean dup = getList().getItemList().contains(last);
             if (!dup) {
-                boolean scrollToTop = SettingUtility.isReadStyleEqualWeibo();
-                if (scrollToTop) {
-                    addNewDataWithoutRememberPosition(data);
-                } else {
-                    addNewDataAndRememberPosition(data);
-                }
+                addNewDataAndRememberPosition(data);
             }
         }
     }
