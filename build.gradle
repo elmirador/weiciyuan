@@ -6,7 +6,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.6.3+'
+        classpath 'com.android.tools.build:gradle:0.12.+'
     }
 }
 
@@ -14,16 +14,19 @@ apply plugin: 'android'
 
 
 dependencies {
-    compile files('libs/gson-2.2.2.jar')
+    compile files('libs/gson-2.2.4.jar')
     compile project(':libs:slidingmenulibrary')
     compile project(':libs:showcaseviewlibrary')
     compile 'com.google.android.gms:play-services:4.0.30+'
-
 }
 
 android {
 
-    buildToolsVersion "19"
+    lintOptions {
+        abortOnError false
+    }
+
+    buildToolsVersion '19.1.0'
     compileSdkVersion 19
 
     defaultConfig {
