@@ -41,3 +41,6 @@ Gradle 构建
 Just for some fun
 
 只是做了个小改动更符合自己的使用习惯
+-配置移除
++阅读菜单中的「新数据载入后」的动作选项现在不仅影响首页而且影响@提醒页和评论页
++black magic is now always on
